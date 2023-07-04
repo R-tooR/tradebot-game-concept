@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+(Prediction) as (Pred)
+(Order) as (Ord)
+(Fundamental) as (Fund)
+(Technical) as (Tech)
+(Account) as (Acc)
+(Other) as (Othr)
+
+(Pred) --> (Tech) : 0..n
+(Pred) --> (Fund) : 0..n
+(Pred) --> (Othr) : 0..n
+(Ord) -> (Pred) : 0..1
+(Acc) --> (Pred) : 0..n
+(Acc) --> (Ord) : 0..n
+
+note right of (Acc)
+  Account contains
+  a bot internally.
+  Bot can be optionally activated.
+end note
+
+note right of (Pred)
+  Prediction is a collection
+  of results of technical,
+  fundamental and other kinds of analysis
+end note
+
+'Admin ---> (Use) : 0to1
+
+'note "This note is connected\nto several objects." as N2
+'(Start) .. N2
+'N2 .. (Use)
+@enduml

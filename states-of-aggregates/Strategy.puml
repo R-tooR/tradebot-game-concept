@@ -1,0 +1,15 @@
+@startuml
+'https://plantuml.com/state-diagram
+hide empty description
+
+[*] --> Created
+Created --> Feeded
+Feeded --> Calculating
+Calculating --> WithResult
+WithResult --> Deactivated
+Modified <-- WithResult
+Modified -> Created
+WithResult -> Feeded
+Deactivated --> Removed
+Removed --> [*]
+@enduml

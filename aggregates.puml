@@ -18,6 +18,7 @@
 (Acc) --> (Ord) : 0..n
 (Fund) --> (Str) : 0..n
 (Fund) --> (Ind) : 0..n
+(Str) -> (Ind) : 0..n
 
 note right of (Acc)
   Account contains

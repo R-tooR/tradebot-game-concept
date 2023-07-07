@@ -1,0 +1,10 @@
+@startuml
+'https://plantuml.com/state-diagram
+hide empty description
+    [*] -> DataGathered
+    DataGathered --> DataAnalyzed
+    DataAnalyzed -> AggregationOfDataAnalysis
+    AggregationOfDataAnalysis --> DataGathered : triggered to update information
+    AggregationOfDataAnalysis : has calculated all informations
+    AggregationOfDataAnalysis : that can share with gatherer
+@enduml

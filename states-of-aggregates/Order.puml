@@ -1,0 +1,21 @@
+@startuml
+'https://plantuml.com/state-diagram
+hide empty description
+state fork_state <<fork>>
+state join_state <<join>>
+
+[*] -> Prepared
+Prepared --> Opened
+Opened --> fork_state
+Opened -> Closed
+Closed --> Prepared : possibility to reopen.\n Possible modification \n before opening.
+Closed --> Archived
+fork_state --> Done
+fork_state --> Discarded
+Done --> join_state
+Discarded --> join_state
+join_state --> Archived
+Archived --> [*]
+
+'może być: przygotowane, otwarte, zamknięte, zrealizowane, niezrealizowane,zarchiwizowane
+@enduml

@@ -1,19 +1,23 @@
 @startuml
 'https://plantuml.com/use-case-diagram
 
-(Prediction) as (Pred)
+(Gatherer) as (Gath)
 (Order) as (Ord)
 (Fundamental) as (Fund)
 (Technical) as (Tech)
 (Account) as (Acc)
 (Other) as (Othr)
+(Strategy) as (Str)
+(Indicator) as (Ind)
 
-(Pred) --> (Tech) : 0..n
-(Pred) --> (Fund) : 0..n
-(Pred) --> (Othr) : 0..n
-(Ord) -> (Pred) : 0..1
-(Acc) --> (Pred) : 0..n
+(Gath) --> (Tech) : 0..1
+(Gath) --> (Fund) : 0..1
+(Gath) --> (Othr) : 0..n
+(Ord) -> (Gath) : 0..1
+(Acc) --> (Gath) : 0..n
 (Acc) --> (Ord) : 0..n
+(Fund) --> (Str) : 0..n
+(Fund) --> (Ind) : 0..n
 
 note right of (Acc)
   Account contains
@@ -21,8 +25,8 @@ note right of (Acc)
   Bot can be optionally activated.
 end note
 
-note right of (Pred)
-  Prediction is a collection
+note right of (Gath)
+  Gatherer is a collection
   of results of technical,
   fundamental and other kinds of analysis
 end note

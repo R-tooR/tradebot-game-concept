@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/state-diagram
+hide empty description
+[*] -> Empty
+Empty -> FetchingData
+
+state FetchingData {
+  state fork_state <<fork>>
+  state join_state <<join>>
+  [*] -> fork_state
+  fork_state --> Technical
+  fork_state --> Fundamental
+  fork_state --> Other
+  Technical --> join_state
+  Fundamental --> join_state
+  Other --> join_state
+}
+
+join_state --> Summing
+Summing -> Ready
+Ready -> OutOfDate
+OutOfDate --> FetchingData
+
+@enduml
+'chyba, że zamiast obiektu "Prediction" po prostu "Gatherer" lub "Collector"
+'stany jakie by miał to: pusty, oczekujący na nowe dane, sumujący, gotowy, przedawniony
+'zaś Fundamental, Technical, Other to osobne agregaty

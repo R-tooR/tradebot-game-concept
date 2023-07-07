@@ -2,7 +2,7 @@
 'https://plantuml.com/state-diagram
 hide empty description
 [*] -> Empty
-Empty -> FetchingData
+Empty --> FetchingData
 
 state FetchingData {
   state fork_state <<fork>>
@@ -18,8 +18,8 @@ state FetchingData {
 
 join_state --> Summing
 Summing -> Ready
-Ready -> OutOfDate
-OutOfDate --> FetchingData
+Ready -> Outdated
+Outdated --> FetchingData
 
 @enduml
 'chyba, że zamiast obiektu "Prediction" po prostu "Gatherer" lub "Collector"

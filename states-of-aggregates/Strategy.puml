@@ -12,4 +12,5 @@ Modified -> Created
 WithResult -> Feeded
 Deactivated --> Removed
 Removed --> [*]
+WithResult : ready to pass information\n to Gatherer
 @enduml

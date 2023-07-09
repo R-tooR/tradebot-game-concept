@@ -16,8 +16,8 @@
 (Ord) -> (Gath) : 0..1
 (Acc) --> (Gath) : 0..n
 (Acc) --> (Ord) : 0..n
-(Fund) --> (Str) : 0..n
-(Fund) --> (Ind) : 0..n
+(Tech) --> (Str) : 0..n
+(Tech) --> (Ind) : 0..n
 (Str) -> (Ind) : 0..n
 
 note right of (Acc)

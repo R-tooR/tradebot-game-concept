@@ -1,0 +1,56 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+participant Gatherer as gath
+collections Technicals as tech
+collections Fundamentals as fund
+opt auto-update of fundamental
+fund --> fund : Auto-trigger new \nfundamental analysis
+end
+gath --> fund : Trigger new fundamental analysis
+activate fund
+gath --> gath : Fetch candles
+note left
+Only Gatherer will have
+an access to external source.
+This will help to obey API
+limits.
+end note
+tech -> gath : Fetch candles
+
+fund -> fund : Web-scrap articles
+
+activate tech
+ref over tech
+ Detailed diagram:
+ calculating-technical.puml
+end ref
+tech -> tech : calculating
+tech -> gath : Send result
+deactivate tech
+
+gath -> gath : Sum up technical results
+deactivate gath
+
+note left
+Fundamentals may be
+either triggered by Gatherer
+or be cron-triggered (e.g.)
+every hour
+end note
+fund -> fund : Analysis of content
+fund --> gath: Send result
+deactivate fund
+activate gath
+gath -> gath : Sum up fundamental result
+deactivate gath
+
+@enduml
+
+'przypadek: technical jest po raz pierwszy w użyciu, albo jest ponownie włączony
+' albo po prostu działa
+' lub - to nie gatherer wysyła, ale technical pobiera sobie, tyle ile potrzebuje
+
+'alternatywy: albo na prośbę gatherera, albo cyklicznie np. co godzinę skanowanie internetu
+' oraz wiadomo, fundamental gdzieś musi przechowywać informacje, oraz je cache'ować

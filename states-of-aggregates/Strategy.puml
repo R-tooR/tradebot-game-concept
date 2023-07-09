@@ -11,6 +11,8 @@ Modified <-- WithResult
 Modified -> Created
 WithResult -> Feeded
 Deactivated --> Removed
+Deactivated -> Reactivated
+Reactivated -> Feeded
 Removed --> [*]
 WithResult : ready to pass information\n to Gatherer
 @enduml

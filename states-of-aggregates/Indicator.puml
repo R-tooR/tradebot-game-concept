@@ -9,6 +9,8 @@ Calculating --> WithResult
 WithResult --> Deactivated
 WithResult -> Feeded
 Deactivated --> Removed
+Deactivated -> Reactivated
+Reactivated -> Feeded
 Removed --> [*]
 WithResult : pass result to Strategies\n and/or to Technical
 @enduml

@@ -8,7 +8,6 @@
 (Account) as (Acc)
 (Other) as (Othr)
 (Strategy) as (Str)
-(Indicator) as (Ind)
 
 (Gath) --> (Tech) : 0..1
 (Gath) --> (Fund) : 0..1
@@ -17,8 +16,7 @@
 (Acc) --> (Gath) : 0..n
 (Acc) --> (Ord) : 0..n
 (Tech) --> (Str) : 0..n
-(Tech) --> (Ind) : 0..n
-(Str) -> (Ind) : 0..n
+(Str) --> (Str) : 0..n
 
 note right of (Acc)
   Account contains

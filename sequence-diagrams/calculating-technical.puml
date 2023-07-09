@@ -4,22 +4,15 @@
 autonumber
 participant Technical as tech
 collections Strategies as str
-collections Indicators as ind
 
 
-activate ind
 activate str
 alt active
-ind -> tech : Fetch last candle
 str -> tech : Fetch last candle
-ind -> ind : Update current\n value of indicator
 str -> str : Update current\n value of strategy
 else created or deactivated
-ind -> tech : Fetch buffer of candles
 str -> tech : Fetch buffer of candles
-ind -> ind : Calculate new value
 str -> str : Calculate new value
 end alt
-ind -> tech : Return result
 str -> tech : return result
 @enduml

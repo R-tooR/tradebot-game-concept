@@ -1,0 +1,58 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+'abstract class AbstractList
+'abstract AbstractCollection
+'interface List
+'interface Collection
+'
+'List <|-- AbstractList
+'Collection <|-- AbstractCollection
+'
+'Collection <|- List
+'AbstractCollection <|- AbstractList
+'AbstractList <|-- ArrayList
+'
+'class ArrayList {
+'Object[] elementData
+'size()
+'}
+'
+'enum TimeUnit {
+'DAYS
+'HOURS
+'MINUTES
+'}
+
+interface Technical {
+  BigDecimal getRecentCandleFor(String pairName, Frequency freq)
+  Optional<List<EntryValue>> getCandleBuffer(int size, Frequency freq, String pairName)
+  boolean start()
+  boolean stop()
+}
+
+Technical <|-- TechnicalImpl
+
+class TechnicalImpl {
+- Set<Scrapper> scrappers
+- Map<String, Queue<EntryValue>> pairs
+- ThreadPoolExecutor threadsPool
+- Set<Client> clientsPool
+'rozważ zrobienie czegoś w stylu time-series DB - warto rozważyć np. InfluxDB
++ TechnicalImpl(Set<String> pairsToFollow)
++ boolean addPair(String newPair)
++ boolean addPairs(List<String> newPairs)
++ boolean removePair(String newPair)
++ boolean removePairs(List<String> newPairs)
+' żeby nie kisić nadmiaru danych w pamięci JVM, można ich nadmiar wyrzucić do bazy danych
+- flushRedundantDataToDB()
+- updateValues(Set<Entry> entries)
+
+}
+
+TechnicalImpl *- Scrapper
+TechnicalImpl <-- EntryValue
+Entry -> TechnicalImpl
+TechnicalImpl <-- Client
+
+@enduml

@@ -27,6 +27,7 @@
 interface Technical {
   BigDecimal getRecentCandleFor(String pairName, Frequency freq)
   Optional<List<EntryValue>> getCandleBuffer(int size, Frequency freq, String pairName)
+  Map<String, BigDecimal> getStrategyResultsForSymbol(String symbol)
   boolean start()
   boolean stop()
 }
@@ -36,23 +37,64 @@ Technical <|-- TechnicalImpl
 class TechnicalImpl {
 - Set<Scrapper> scrappers
 - Map<String, Queue<EntryValue>> pairs
-- ThreadPoolExecutor threadsPool
-- Set<Client> clientsPool
+- Map<String, Strategy> strategies
+
 'rozważ zrobienie czegoś w stylu time-series DB - warto rozważyć np. InfluxDB
 + TechnicalImpl(Set<String> pairsToFollow)
 + boolean addPair(String newPair)
 + boolean addPairs(List<String> newPairs)
-+ boolean removePair(String newPair)
-+ boolean removePairs(List<String> newPairs)
++ boolean detachPair(String newPair)
++ boolean detachPairs(List<String> newPairs)
++ boolean addStrategy(String name, Strategy strategy)
++ boolean detachStrategy(String name)
++ Map<String, BigDecimal> getStrategyResultsForSymbol(String symbol)
 ' żeby nie kisić nadmiaru danych w pamięci JVM, można ich nadmiar wyrzucić do bazy danych
+' jest javowy klient InfluxDB który pozwlala na zapisywanie do bazy okresowo
 - flushRedundantDataToDB()
 - updateValues(Set<Entry> entries)
 
 }
 
-TechnicalImpl *- Scrapper
-TechnicalImpl <-- EntryValue
-Entry -> TechnicalImpl
-TechnicalImpl <-- Client
+class Entry {
+    long timestamp
+    EntryValue value
+}
 
+class EntryValue {
+    String pairName
+    BigDecimal value
+}
+
+TechnicalImpl *- Scrapper : scrapper passes results to queue, read by Technical instance
+TechnicalImpl <-- EntryValue
+'TechnicalImpl <-- StrategyOutcome
+StrategyOutcome <- Recommendation
+Entry -> TechnicalImpl
+Scrapper <-- Client
+note left
+Client compliant with JAX-RS specification
+end note
+
+abstract class Scrapper {
+    - ThreadPoolExecutor threadsPool
+    - Set<Client> clientsPool
+
+    - Map<String, BigDecimal> getCurrentPrices()
+}
+
+class GoogleScrapper extends Scrapper {
+}
+
+'class StrategyOutcome {
+'    BigDecimal result
+'    Recommendation recommendation
+'}
+
+enum Recommendation {
+STRONG_BUY
+BUY
+NEUTRAL
+SELL
+STRONG_SELL
+}
 @enduml

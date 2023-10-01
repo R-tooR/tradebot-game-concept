@@ -57,16 +57,11 @@ class TechnicalImpl {
 
 class Entry {
     long timestamp
-    EntryValue value
-}
-
-class EntryValue {
     String pairName
     BigDecimal value
 }
 
 TechnicalImpl *- Scrapper : scrapper passes results to queue, read by Technical instance
-TechnicalImpl <-- EntryValue
 'TechnicalImpl <-- StrategyOutcome
 StrategyOutcome <- Recommendation
 Entry -> TechnicalImpl
